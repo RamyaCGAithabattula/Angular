@@ -1,0 +1,19 @@
+<h2>Search Product</h2>
+
+<input type="text" [(ngModel)]="empId"/>
+<input type="button" value="Search" (click)="searchData()" />
+<table border="1">
+    <tr>
+        <th>Employee Id</th>
+        <th>Employee Name</th>
+        <th>Employee Salary</th>
+        <th>Employee Department</th>
+    </tr>
+    <tr *ngFor="let emp of Search">
+        <td>{{emp.empId}}</td>
+        <td>{{emp.empName}}</td>
+        <td>{{emp.empSalary}}</td>
+        <td>{{emp.empDepartment}}</td>
+      
+    </tr>
+</table>

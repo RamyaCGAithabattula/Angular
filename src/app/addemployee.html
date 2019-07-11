@@ -1,0 +1,63 @@
+<h2>Add Product</h2>
+
+
+
+    <form #empForm=ngForm (ngSubmit)="addData()">
+            <div class="form-group">
+                    <label for="Inputid">Product Id</label>
+                    <input type="text" class="form-control" id="id" aria-describedby="idHelp" placeholder="Enter id"  [(ngModel)]="proId" 
+                    #idcontrol="ngModel" required/>
+                    <small id="idHelp" class="form-text text-muted" *ngIf="idcontrol.touched && idcontrol.invalid">Id should be filled</small>
+                  </div>
+
+                  <div class="form-group">
+                        <label for="Inputname">Product Name</label>
+                        <input type="text" class="form-control" id="name" aria-describedby="idHelp" placeholder="Enter name"  [(ngModel)]="proName" #namecontrol="ngModel" required/>
+                        <small id="idHelp" class="form-text text-muted" *ngIf="namecontrol.touched && namecontrol.invalid">>Name should be filled</small>
+                      </div>
+ 
+   
+    <tr>
+        <td>Product Cost</td>
+        <td><input type="text" name="cost" id="pcost"[(ngModel)]="proCost" #costcontrol="ngModel" required/></td>
+        <span  *ngIf="costcontrol.touched && costcontrol.invalid" class="alert alert-warning" role="alert">Salary should be filled</span>
+    </tr>
+    <tr>
+        <td>Product Online</td>
+        <td><input type="radio" value ="Yes"name="dept" id="edept"[(ngModel)]="proOnline" #onlinecontrol="ngModel" required/>Yes</td>
+        <td><input type="radio" value ="No"name="dept" id="edept"[(ngModel)]="proOnline" #onlinecontrol="ngModel" required/>No</td>
+        <span *ngIf="onlinecontrol.touched && onlinecontrol.invalid">should be filled</span>
+    </tr>
+    <tr>
+        <td>Product Category</td>
+        <td> <select>
+                <option value="Design" name="category" id="pcategory"[(ngModel)]="proCategory" #categorycontrol="ngModel" required>Design</option>
+                <option value="Technical"  name="category" id="pcategory"[(ngModel)]="proCategory" #categorycontrol="ngModel" required>Technical</option>
+               
+              </select>
+              </td>
+        <span *ngIf="categorycontrol.touched && categorycontrol.invalid">Category should be filled</span>
+    </tr>
+    <tr>
+      <td>Available in store</td>
+      <td><input type="checkbox" value="BigBazar" name="store" id="pstore"[(ngModel)]="prostore" #storecontrol="ngModel" required />Big Bazar</td>
+      
+     <td><input type="checkbox" value="DMart"name="store" id="pstore">DMart</td>
+     
+     <td><input type="checkbox" value="Reliance"name="store" id="pstore">Reliance</td>
+    <td> <input type="checkbox" value="Mega Store" name="store" id="pstore">Mega Store</td>
+    
+  
+       
+        <span *ngIf="storecontrol.touched && storecontrol.invalid">should be filled</span>
+    </tr>
+
+    <tr>
+
+
+      <td><input type="submit" class="btn btn-primary" value="Add Product" [disabled]="empForm.invalid" /></td>
+
+    </tr>
+  
+</form>
+
