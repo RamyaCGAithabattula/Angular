@@ -1,0 +1,138 @@
+
+    
+
+import { Component, OnInit } from'@angular/core';
+ 
+@Component({
+selector:'app-employee',
+templateUrl:'./employee.component.html',
+styleUrls: ['./employee.component.css']
+})
+exportclassEmployeeComponentimplementsOnInit {
+Employees:any[] = [
+ {
+"empId":1001,
+"empName":"Rahul",
+"empSalary":9000,
+"empDepartment":"Java"
+ },
+ {
+"empId":1002,
+"empName":"Sachin",
+"empSalary":19000,
+"empDepartment":"OraApps"
+ },
+ {
+"empId":1003,
+"empName":"Vikash",
+"empSalary":29000,
+"empDepartment":"BI"
+ }
+ ]
+updateId:number;
+updateName:String;
+updateSal:number;
+updateDep:String;
+updateres:any;
+constructor() { }
+ 
+ngOnInit() {
+ }
+AddEmployee(id:number,name:String,salary:number,department:String){
+letuId=id;
+letuName=name;
+letuSalary=salary;
+letuDepartment=department;
+this.Employees.push({"empId":uId,"empName":uName,"empSalary":uSalary,"empDepartment":uDepartment});
+ }
+update(emp){
+this.updateId=emp.empId;
+this.updateName=emp.empName;
+this.updateSal=emp.empSalary;
+this.updateDep=emp.empDepartment;
+this.updateres=emp;
+ }
+updateEmployee(updateId:number,updateName:string,updateSal:number,updateDep:string){
+this.updateres.empId=updateId;
+this.updateres.empName=updateName;
+this.updateres.empSalary=updateSal;
+this.updateres.empDepartment=updateDep;
+ }
+delete(emp){
+this.Employees.splice(this.Employees.indexOf(emp),1);
+ }
+
+
+ }
+
+
+
+
+
+
+    
+
+<h5>Angular 2 operation</h5>
+<h3>ADD EMPLOYEE</h3>
+<table>
+<tr>ID
+<td><inputtype="text"#id></td>
+</tr>
+<tr>NAME
+<td><inputtype="text"#name></td>
+</tr>
+<tr>SALARY
+<td><inputtype="text"#salary></td>
+</tr>
+<tr>DEPARTMENT
+<td><inputtype="text"#department></td>
+</tr>
+<tr>
+<td><button(click)="AddEmployee(id.value,name.value,salary.value,department.value)">Add Employee</button></td>
+</tr>
+</table>
+ 
+<h3>SHOW ALL EMPLOYEES</h3>
+<tableborder="1">
+<tr>
+<th>ID</th>
+<th>NAME</th>
+<th>SALARY</th>
+<th>DEPARTMENT</th>
+<thcolspan="2">ACTION</th>
+</tr>
+ 
+<tr*ngFor="let emp of Employees"leti:index>
+<td>{{emp.empId}}</td>
+<td>{{emp.empName}}</td>
+<td>{{emp.empSalary}}</td>
+<td>{{emp.empDepartment}}</td>
+<td><button(click)="update(emp)">UPDATE</button>
+<button(click)="delete(emp,i)">DELETE</button>
+</td>
+</tr>
+</table>
+ 
+<h3>UPDATE EMPLOYEE</h3>
+<table>
+<tr>ID : 
+<td><inputtype="text"[value]="updateId"#refupdateid></td>
+</tr>
+<tr>NAME : 
+<td><inputtype="text"[value]="updateName"#refupdatename></td>
+</tr>
+<tr>SALARY : 
+<td><inputtype="text"[value]="updateSal"#refupdatesal></td>
+</tr>
+<tr>DEPARTMENT :
+<td><inputtype="text"[value]="updateDep"#refupdatedep></td>
+</tr>
+<tr>
+<td><button(click)="updateEmployee(refupdateid.value,refupdatename.value,refupdatesal.value,refupdatedep.value)">Update Employee</button></td>
+</tr>
+</table>
+
+
+
+ 
+
