@@ -1,0 +1,209 @@
+list.html
+
+<body>
+    <h1>ProductInput</h1>
+    <table>
+        <tr>
+            <td>productId</td>
+            <td><input type="text" #pid> </td>
+        </tr>
+        <tr>
+            <td>productName</td>
+            <td><input type="text" #pname> </td>
+        </tr>
+        <tr>
+            <td> cost</td>
+            <td><input type="text" #pcost> </td>
+        </tr>
+
+
+        <td><button type=button (click)="addproduct(pid.value,pname.value,pcost.value)">AddProducts</button>
+    </table>
+    <h2>Products Table</h2>
+    <table border="1">
+        <tr>
+            <td>productId</td>
+            <td>productName</td>
+            <td>cost</td>
+            <td colspan="2">Action</td>
+        </tr>
+        <tr *ngFor="let item of products; let i=index">
+            <td>{{item.QproductId}}</td>
+            <td>{{item.QproductName}}</td>
+            <td>{{item.Qcost}}</td>
+            <td><button type=button (click)="updateproduct(item)">updateProduct</button></td>
+            <td><button type=button (click)="deleteproduct(item,i)">deleteProduct</button></td>
+        </tr>
+    </table>
+
+    <h2>UpdateProductlist</h2>
+    <table>
+        <tr>
+            <td>productId</td>
+            <td><input type="text" #uid></td>
+        </tr>
+        <tr>
+            <td>productName</td>
+            <td><input type="text" #uname></td>
+        </tr>
+        <tr>
+            <td> cost</td>
+            <td><input type="text" #ucost></td>
+        </tr>
+        <tr>
+            <td><button type=button (click)="updateproductNew(uid.value,uname.value,ucost.name)">updated</button></td>
+        </tr>
+    </table>
+</body>
+
+list.ts
+
+import { Component, OnInit } from '@angular/core';
+import { SproductService } from './sproduct.service';
+
+@Component({
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.css']
+})
+export class ListComponent implements OnInit {
+  
+  products;
+  constructor(private sproductservive:SproductService) { }
+  ngOnInit() {
+    this.sproductservive.getSame().subscribe(data=>this.products=data);
+  }
+
+    
+    
+  uid: number;
+  uname: string;
+  ucost: number;
+  uopt: any;
+
+  addproduct(pid: "number", pname: "string", pcost: "number") {
+    this.products.push({ QproductId: pid, QproductName: pname, Qcost: pcost });
+    alert("product added succesfully");
+
+  }
+
+  deleteproduct(item) {
+    this.products.splice(this.products.indexOf(item), 1);
+  }
+
+
+
+  updateproduct(item) {
+    this.uid = item.QproductId;
+    this.uname = item.QproductName;
+    this.ucost = item.Qcost;
+    this.uopt = item;
+
+  }
+
+  updateproductNew(uid: number, uname: string, ucost: number) {
+    this.uopt.QproductId = uid;
+    this.uopt.QproductName = uname;
+    this.uopt.Qcost = ucost;
+  }
+}
+
+ser ys
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Iproduct } from './iproduct';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SproductService {
+
+  constructor(private http:HttpClient) { }
+  private _url:string="./assets/product.json";
+  
+    getSame():Observable<Iproduct[]>{
+      return this.http.get<Iproduct[]>(this._url);
+
+
+  }
+}
+
+iproducts
+export interface Iproduct {
+    "QproductId": number;
+    "QproductName":string;
+    "Qcost":number;
+}
+
+app roting module.ts
+
+const routes: Routes = [
+  {path:'home',component:HomeComponent},
+  {path:'list',component:ListComponent},
+  {path:'success',component:SuccessComponent}
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+export const routingComponents = [HomeComponent,ListComponent,SuccessComponent]
+
+app.component.html
+
+<!--The content below is only a placeholder and can be replaced.-->
+<nav>
+    <button type="button" routerLink = '/home' >Home</button>
+    <button type="button" routerLink = '/list' >List</button>
+    <button type="button" routerLink = '/success' >Success</button>
+</nav>
+<router-outlet></router-outlet>
+
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import{HttpClientModule} from '@angular/common/http';
+import { AppRoutingModule,routingComponents } from './app-routing.module';
+import { AppComponent } from './app.component';
+// import { ListComponent } from './list/list.component';
+// import { HomeComponent } from './home/home.component';
+// import { SuccessComponent } from './success/success.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    routingComponents
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+[
+
+json
+[
+[
+[
+    {
+      "QproductId": 1,
+      "QproductName": "mysoreSandal",
+      "Qcost": 40
+    },
+    {
+      "QproductId": 2,
+      "QproductName": "dove",
+      "Qcost": 30
+    },
+    {
+      "QproductId": 3,
+      "QproductName": "lil",
+      "Qcost": 20
+    }
+  ]
